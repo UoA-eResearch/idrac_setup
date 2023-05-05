@@ -7,6 +7,7 @@
   root in the OME server (ends up in the OME database, after a host discovery)
   ntradm for our logins and scripts
   itsadm for Connect logins to the iDRACS
+  
 2 `idrac_update.sh <ntradm_pwd> <host> ...`
    Set up SNMP, SMTP, ... on a new server
 
