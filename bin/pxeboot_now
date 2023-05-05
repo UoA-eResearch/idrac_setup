@@ -1,0 +1,23 @@
+#!/bin/bash
+# PXE boot a host
+
+USAGE="Usage: $0 ntradm_pwd host1 .. hostN"
+
+if [ $# -lt "2" ] ; then
+        echo "$USAGE"
+        exit 1
+fi
+
+
+admin='ntradm'
+cake=$1; shift
+
+for i in "$@" ; do
+  hname=$i
+# ip=$(host ${hname}.nectar.auckland.ac.nz | awk '/has address/ { print $NF; exit }')
+  echo "PXE booting " ${hname}
+
+  racadm -r ${hname} -u ${admin} -p ${cake} config -g cfgServerInfo -o cfgServerBootOnce 1
+  racadm -r ${hname} -u ${admin} -p ${cake} config -g cfgServerInfo -o cfgServerFirstBootDevice PXE
+  racadm -r ${hname} -u ${admin} -p ${cake} serveraction powercycle
+done

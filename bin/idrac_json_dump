@@ -1,0 +1,17 @@
+#!/bin/bash
+# Dump all the iDRAC settings, in JSON
+
+USAGE="Usage: $0 ntradm_pwd host1 ... hostN"
+
+if [ $# -lt "2" ] ; then
+        echo "$USAGE"
+        exit 1
+fi
+
+admin='ntradm'
+cake=$1 ; shift
+
+for hname in "$@" ; do
+  echo "iDRAC JSON dump " ${hname}
+  racadm -r ${hname} -u ${admin} -p ${cake}  get -f ${hname}.json -t JSON
+done

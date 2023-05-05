@@ -1,0 +1,17 @@
+#!/bin/bash
+# Disable iDRAC alerts
+
+USAGE="Usage: $0 ntradm_pwd host1 ... hostN"
+
+if [ $# -lt "2" ] ; then
+	echo "$USAGE"
+	exit 1
+fi
+
+admin='ntradm'
+cake=$1 ; shift
+
+for hname in "$@" ; do
+  echo "Disable alerts on " $hname
+  racadm -r ${hname} -u ${admin} -p ${cake} set iDRAC.IPMILan.AlertEnable 'Disabled'
+done

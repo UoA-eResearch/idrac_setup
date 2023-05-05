@@ -1,0 +1,14 @@
+#!/bin/bash
+# Retrieve the ethernet interface names and MAC from the iDRAC
+
+USAGE="Usage: $0 ntradm_pwd host"
+
+if [ $# -lt "2" ] ; then
+	echo "$USAGE"
+	exit 1
+fi
+
+admin='ntradm'
+cake=$1; shift
+
+racadm -r $1  -u ${admin} -p ${cake} hwinventory NIC | grep NIC
