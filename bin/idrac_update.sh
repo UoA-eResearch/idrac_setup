@@ -45,6 +45,7 @@ for i in "$@" ; do
 
     # Set the hostname
     racadm -r ${hname} -u ${admin} -p ${cake} set iDRAC.NIC.DNSRacName ${hname}
+		racadm -r ${hname} -u ${admin} -p ${cake} set System.ServerOS.HostName ${hname}
 
     # Setup DNS Servers
     racadm -r ${hname} -u ${admin} -p ${cake} set iDRAC.IPv4.DNS1 130.216.1.1
