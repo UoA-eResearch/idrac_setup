@@ -9,4 +9,4 @@ fi
 admin='root'
 cake=$(pass show idrac/root)
 
-racadm -r $1  -u ${admin} -p ${cake} hwinventory NIC | grep NIC
+racadm -r $1 -u ${admin} -p ${cake} get macaddress -a

@@ -1,16 +1,14 @@
 #!/bin/bash
-# PXE boot a host
+USAGE="Usage: $0 host1 .. hostN"
 
-USAGE="Usage: $0 ntradm_pwd host1 .. hostN"
-
-if [ $# -lt "2" ] ; then
+if [ $# -lt "1" ] ; then
         echo "$USAGE"
         exit 1
 fi
 
 
-admin='ntradm'
-cake=$1; shift
+admin='root'
+cake=$(pass show idrac/root)
 
 for i in "$@" ; do
   hname=$i
@@ -19,5 +17,6 @@ for i in "$@" ; do
 
   racadm -r ${hname} -u ${admin} -p ${cake} config -g cfgServerInfo -o cfgServerBootOnce 1
   racadm -r ${hname} -u ${admin} -p ${cake} config -g cfgServerInfo -o cfgServerFirstBootDevice PXE
+  # racadm -r ${hname} -u ${admin} -p ${cake} config -g cfgServerInfo -o cfgServerFirstBootDevice BIOS
   racadm -r ${hname} -u ${admin} -p ${cake} serveraction powercycle
 done

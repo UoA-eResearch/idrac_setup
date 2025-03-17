@@ -1,17 +1,16 @@
 #!/bin/bash
-# Setup the ntradm and itsadm users, as the first step in the config.
-# 
 
-USAGE="Usage: $0 root_pwd ntradm_pwd itsadm_pwd host1 ... hostN"
 
-if [ $# -lt "4" ] ; then
+USAGE="Usage: $0 host1 ... hostN"
+
+if [ $# -lt "1" ] ; then
 	echo "$USAGE"
 	exit 1
 fi
 
-cake=$1 ; shift
-ntradm_pwd=$1 ; shift
-itsadm_pwd=$1 ; shift
+cake=$(pass show idrac/root)
+ntradm_pwd=$(pass show idrac/ntradm)
+itsadm_pwd=$(pass show idrac/connect)
 
 for i in "$@" ; do
     hname=$i ip=$(host ${hname}.nectar.auckland.ac.nz | awk '/has address/ { print $NF; exit }')
@@ -37,3 +36,4 @@ for i in "$@" ; do
     racadm -r ${hname} -u root -p ${cake} set iDRAC.Users.4.IpmiLanPrivilege 4
     racadm -r ${hname} -u root -p ${cake} set iDRAC.Users.4.Enable Enabled
 done
+

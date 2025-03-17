@@ -1,15 +1,13 @@
 #!/bin/bash
-# Set booting via BIOS, not uefi
+USAGE="Usage: $0 host1 ... hostN"
 
-USAGE="Usage: $0 ntradm_pwd host1 ... hostN"
-
-if [ $# -lt "2" ] ; then
+if [ $# -lt "1" ] ; then
 	echo "$USAGE"
 	exit 1
 fi
 
-admin='ntradm'
-cake=$1 ; shift
+admin='root'
+cake=$(pass show idrac/root)
 
 for hname in "$@" ; do
   echo "Set BIOS Boot and powercycle " ${hname}
